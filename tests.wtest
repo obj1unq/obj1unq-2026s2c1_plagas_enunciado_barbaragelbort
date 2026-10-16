@@ -1,0 +1,71 @@
+import plagas.*
+import barrios.*
+import elementos.*
+describe "Prueba de Elementos" {
+  test "Es elemento bueno Huerta" {
+    const huerta = new Huerta (nivel = 10, capacidadDeProduccion = 50)
+    assert.equals(true, huerta.esBueno())
+  }
+  test "Es elemento bueno Mascota" {
+    const mascota = new Mascota (nivelDeSalud = 300)
+    assert.equals(true, mascota.esBueno())
+  }
+  test "Es elemento no bueno Hogar" {
+    const hogar = new Hogar (nivelDeMugre = 40, confortQueOfrece = 50)
+    assert.equals(false, hogar.esBueno())
+  }
+}
+describe "Prueba de Barrios" {
+  test "Es barrio copado" {
+    const huerta = new Huerta (nivel = 10, capacidadDeProduccion = 50)
+    const mascota = new Mascota (nivelDeSalud = 300)
+    const barrio = new Barrio ()
+    barrio.agregarElementoAlBarrio(huerta)
+    barrio.agregarElementoAlBarrio(mascota)
+    assert.equals(true, barrio.esCopado())
+  }
+  test "No es barrio copado" {
+    const huerta = new Huerta (nivel = 10, capacidadDeProduccion = 50)
+    const hogar = new Hogar (nivelDeMugre = 40, confortQueOfrece = 50)
+    const barrio = new Barrio ()
+    barrio.agregarElementoAlBarrio(huerta)
+    barrio.agregarElementoAlBarrio(hogar)
+    assert.equals(false, barrio.esCopado())
+  }
+}
+describe "Prueba de Daño de Plagas" {
+  test "Daño de plaga cucaracha" {
+    const pCucaracha = new PlagaDeCucaracha (poblacion = 30)
+    assert.equals(15, pCucaracha.nivelDeDaño())
+  }
+  test "Daño de plaga pulga" {
+    const pPulga = new PlagaDePulga (poblacion = 30)
+    assert.equals(60, pPulga.nivelDeDaño())
+  }
+  test "Daño de plaga garrapata" {
+    const pGarrapata = new PlagaDeGarrapata (poblacion = 30)
+    assert.equals(60, pGarrapata.nivelDeDaño())
+  }
+  test "Daño de plaga mosquito" {
+    const pMosquito = new PlagaDeMosquito (poblacion = 30)
+    assert.equals(30, pMosquito.nivelDeDaño())
+  }
+}
+describe "Prueba de Enfermedades de Plagas" {
+  test "Enferemedad de plaga cucaracha" {
+    const pCucaracha = new PlagaDeCucaracha (poblacion = 30, pesoPromedio = 20)
+    assert.equals(true, pCucaracha.transmitenEnfermedades())
+  }
+  test "Enfermedad de plaga pulga" {
+    const pPulga = new PlagaDePulga (poblacion = 30)
+    assert.equals(true, pPulga.transmitenEnfermedades())
+  }
+  test "No enfermedad de plaga garrapata" {
+    const pGarrapata = new PlagaDeGarrapata (poblacion = 2)
+    assert.equals(false, pGarrapata.transmitenEnfermedades())
+  }
+  test "No enfermedad de plaga mosquito" {
+    const pMosquito = new PlagaDeMosquito (poblacion = 20)
+    assert.equals(false, pMosquito.transmitenEnfermedades())
+  }
+}
